@@ -59,7 +59,7 @@ compdef _agar agar='sudo apt-get autoremove'
 
 # Remove ALL kernel images and headers EXCEPT the one in use
 alias kclean='sudo aptitude remove -P ?and(~i~nlinux-(ima|hea) \
-	?not(~n`uname -r`))'
+  ?not(~n`uname -r`))'
 
 # Misc. #####################################################################
 # print all installed packages
@@ -73,18 +73,18 @@ alias mydeb='time dpkg-buildpackage -rfakeroot -us -uc'
 # If packagename is not given as 2nd argument the function will ask for it and guess the default by taking
 # the part after the / from the ppa name wich is sometimes the right name for the package you want to install
 aar() {
-	if [ -n "$2" ]; then
-		PACKAGE=$2
-	else
-		read "PACKAGE?Type in the package name to install/upgrade with this ppa [${1##*/}]: "
-	fi
-	
-	if [ -z "$PACKAGE" ]; then
-		PACKAGE=${1##*/}
-	fi
-	
-	sudo apt-add-repository $1 && sudo apt-get update
-	sudo apt-get install $PACKAGE
+    if [ -n "$2" ]; then
+        PACKAGE=$2
+    else
+        read "PACKAGE?Type in the package name to install/upgrade with this ppa [${1##*/}]: "
+    fi
+
+    if [ -z "$PACKAGE" ]; then
+        PACKAGE=${1##*/}
+    fi
+
+    sudo apt-add-repository $1 && sudo apt-get update
+    sudo apt-get install $PACKAGE
 }
 
 # Prints apt history
@@ -128,7 +128,7 @@ kerndeb () {
     # temporarily unset MAKEFLAGS ( '-j3' will fail )
     MAKEFLAGS=$( print - $MAKEFLAGS | perl -pe 's/-j\s*[\d]+//g' )
     print '$MAKEFLAGS set to '"'$MAKEFLAGS'"
-	appendage='-custom' # this shows up in $ (uname -r )
+    appendage='-custom' # this shows up in $ (uname -r )
     revision=$(date +"%Y%m%d") # this shows up in the .deb file name
 
     make-kpkg clean
@@ -138,7 +138,7 @@ kerndeb () {
 }
 
 # List packages by size
-function apt-list-packages {
+apt-list-packages() {
     dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | \
     grep -v deinstall | \
     sort -n | \
